@@ -6,7 +6,6 @@ const server = http.createServer((req, res) => {
     const method = req.method;
 
     if(url === "/") {
-
         if(method === "GET") {
             res.write("Welcome to the home page ");
             res.write("Hello utkarsh ");
