@@ -1,6 +1,9 @@
 const userData = require("../usersData");
 
-function getAllUsers (req, res) {
+
+function getAllUsers (req, res, next) {
+    console.log("getAllUsers handler")
+
     res.status(200).json(userData.data.map(user => {
         return {
             name: user.name
