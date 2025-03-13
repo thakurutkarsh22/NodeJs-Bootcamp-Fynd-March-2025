@@ -1,15 +1,15 @@
 
 // HOW TO FORWARD THE REQQUEST ? 
 // use next(); 
-const SECRET_PASSWORD = "asdf1234";
+
 
 function AuthenticateUser (req, res, next) {
+    const PASSWORD = req.PASSWORD
 
     const headers = req.headers;
     const authorization = headers.authorization;
-    console.log("AuthenticateUser Middleware")
 
-    if(authorization === SECRET_PASSWORD){
+    if(authorization === PASSWORD){
         next();
     } else {
         res.status(403).json({mesasge: "buddy password needed"});
