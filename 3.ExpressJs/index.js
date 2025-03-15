@@ -1,10 +1,9 @@
 const express = require("express");
 const mongoose = require('mongoose');
-const userData = require("./usersData");
 const { welcomePageResponse, aboutsResponse, aboutsResponseV1, aboutsResponseV2 } = require("./Controllers/HomeController");
 const UserRoute = require("./Routes/UserRoute");
-const AuthenticateUser = require("./Middleware/AuthMiddleware");
-const dotenv = require('dotenv')
+const BlogRoute = require("./Routes/BlogsRoute");
+const dotenv = require('dotenv');
 const server = express();
 const PORT = 8087;
 
@@ -16,6 +15,10 @@ dotenv.config()
 // for every request I am saying that autheticate yourself
 // THIS MIDDLEWARE IS A UNIVERSAL : RN WE WILL NOT USE IT.
 // server.use( AuthenticateUser)
+
+server.use(express.json());
+
+
 
 // MIDDLWARE WORKING FOR ALL THE PATHS
 server.use((req,res, next) => {
@@ -43,6 +46,10 @@ server.use("/v1/user", UserRoute)
 //     const headers = req.headers
 //     const authorization = headers.authorization
 // })
+
+server.use("/v1/blogs", BlogRoute)
+
+
 
 console.log(process.env.PASSWORD, "password of the server");
 
