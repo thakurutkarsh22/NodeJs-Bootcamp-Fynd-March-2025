@@ -22,7 +22,14 @@ class AuthService {
         }
     }
 
-
+    static async findUserById(id) {
+        try {
+            const response = await UserModel.findById(id.id)
+            return response;
+        } catch (error) {
+            return error
+        }
+    }
 }
 
 module.exports = AuthService

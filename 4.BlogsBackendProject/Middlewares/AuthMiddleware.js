@@ -1,18 +1,28 @@
-
-// HOW TO FORWARD THE REQQUEST ? 
-// use next(); 
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("../Controllers/AuthController");
 
 
 function AuthenticateUser (req, res, next) {
-    const PASSWORD = req.PASSWORD
+    const token = req.headers?.authorization?.split(" ")[1];
 
-    const headers = req.headers;
-    const authorization = headers.authorization;
-
-    if(authorization === PASSWORD){
-        next();
+    if(!token) {
+        res.status(401).json({
+            success: false,
+            message: "Authentication required"
+        })
     } else {
-        res.status(403).json({mesasge: "buddy password needed"});
+        // 1. validtity of token 
+        jwt.verify(token, secretKey, (error, decodedMessage) => {
+            if(error) {
+                res.status(401).json({
+                    success: false,
+                    message: "invalid token"
+                })
+            } else {
+                req.userId = decodedMessage.user
+                next();
+            }
+        })
     }
 }
 

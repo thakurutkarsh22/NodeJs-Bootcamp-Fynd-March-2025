@@ -1,15 +1,19 @@
 const BlogModel = require("../Database/Models/BlogModel");
+const AuthService = require("../Services/AuthService");
 
 async function createBlog  (req,res) {
+    const userId = req.userId;
     const body = req.body;
     const title = body.title;
     const content = body.content;
-    const authors = body.authors;
+
+    const author = await AuthService.findUserById(userId);
+
 
     const blogObject = {
         title,
         content,
-        authors,
+        authors: [author.username],
     }
     const blogModelObject = BlogModel(blogObject);
 

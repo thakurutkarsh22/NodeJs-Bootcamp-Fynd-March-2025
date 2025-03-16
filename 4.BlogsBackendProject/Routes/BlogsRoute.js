@@ -1,13 +1,15 @@
 const express = require("express");
-const { welcomePageResponse, aboutsResponseV1, aboutsResponseV2 } = require("../Controllers/HomeController");
+const { createBlog, getAllBlogs, getById, deleteBlogByID, editBlogByID } = require("../Controllers/BlogController");
+const AuthenticateUser = require("../Middlewares/AuthMiddleware");
 
 
 const router = express.Router();
 
-router.post("/", welcomePageResponse);
-router.get("/home", welcomePageResponse);
-router.get("/abouts", aboutsResponseV1);
-router.delete("/deleteBlog/:id", aboutsResponseV2);
+router.post("/createnewblog", AuthenticateUser, createBlog);
+router.get("/getAllBlogs", getAllBlogs);
+router.get("/getBlog/:id", getById);
+router.delete("/deleteBlog/:id", deleteBlogByID);
+router.put("/editBlog/:id", editBlogByID);
 
 
 

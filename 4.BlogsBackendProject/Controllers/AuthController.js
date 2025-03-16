@@ -1,4 +1,3 @@
-const UserModel = require("../Database/Models/UserModel");
 const AuthService = require("../Services/AuthService");
 const jwt = require("jsonwebtoken");
 
@@ -49,7 +48,9 @@ async function loginUser(req, res) {
             const authData = {
                 user: {id: user._id}
             }
-            const token = jwt.sign( authData ,secretKey)
+            const token = jwt.sign( authData ,secretKey, {
+                expiresIn: "600000ms"
+            })
             res.status(200).json({
                 success:true,
                 user: user,
@@ -65,4 +66,4 @@ async function loginUser(req, res) {
 
 }
 
-module.exports = { createUser, loginUser }
+module.exports = { createUser, loginUser, secretKey }
