@@ -1,5 +1,6 @@
 const AuthService = require("../Services/AuthService");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const secretKey = "sdjaldladjkjhaksjdfhaksjfhaskjdfhajs";
 
@@ -8,9 +9,13 @@ async function createUser(req, res) {
     const username = body.username;
     const password = body.password;
     const email = body.email;
+
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const userObject = {
         username,
-        password,
+        password: hashedPassword,
         email,
     }
 
@@ -44,7 +49,10 @@ async function loginUser(req, res) {
         });
     } else {
         const user = foundUser[0];
-        if(password === user.password) {
+
+        const isPasswordMatched = await bcrypt.compare(password, foundUser[0].password)
+
+        if(isPasswordMatched) {
             const authData = {
                 user: {id: user._id}
             }

@@ -6,7 +6,7 @@ const BlogRoute = require("./Routes/BlogsRoute");
 const HomeRoute = require("./Routes/HomeRoute");
 const AuthRoute = require("./Routes/AuthRoute");
 const dotenv = require('dotenv');
-const server = express();
+const server = express(); // HTTP SERVER (NOT web socket server)
 const cors  = require("cors");
 
 // LOADING CONFIG
